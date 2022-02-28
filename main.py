@@ -6,7 +6,7 @@ from datetime import datetime
 import pandas as pd
 from time import sleep
 
-class Firefox_driver():
+class Chrome_driver():
     def __init__(self,URL='https://vbdata.cn/newsList',path=os.path.join(os.getcwd(),'DATA')):
         self.URL=URL
         self.path=path
@@ -14,7 +14,7 @@ class Firefox_driver():
             os.mkdir(path)
         self.dict={}
         self.dataframe=pd.DataFrame(columns=['Date','Time','Tag','Title','Content'])
-        self.driver=webdriver.Firefox()
+        self.driver=webdriver.Chrome()
         self.driver.implicitly_wait(20)
         
     def get_URL(self):
@@ -75,7 +75,7 @@ class Firefox_driver():
         self.driver.quit()
     
 if __name__ == '__main__':
-    driver=Firefox_driver()
+    driver=Chrome_driver()
     driver.get_URL()
     items,dates=driver.get_data()
     driver.process_data(items,dates)
