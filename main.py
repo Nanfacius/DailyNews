@@ -18,7 +18,7 @@ class Chrome_driver():
         option = webdriver.ChromeOptions()
         option.add_argument('headless')
         if driver_path:
-            self.driver=webdriver.Chrome('/usr/bin/chromedriver',chrome_options=option)
+            self.driver=webdriver.Chrome('/usr/bin/chromedriver',options=option)
         else:
             self.driver=webdriver.Chrome(chrome_options=option)
         self.driver.implicitly_wait(20)
@@ -89,7 +89,7 @@ class Chrome_driver():
     def quit(self):
         self.driver.quit()
         print('Driver quited!')
-    
+print(os.getcwd())
 # if __name__ == '__main__':
 driver=Chrome_driver() #传递driver路径，如果driver保存在Python.exe相同目录下则可以不传递参数
 driver.get_URL()
