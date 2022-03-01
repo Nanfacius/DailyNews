@@ -20,6 +20,8 @@ class Chrome_driver():
             os.mkdir(path)
         self.dict={}
         self.dataframe=pd.DataFrame(columns=['Date','Time','Tag','Title','Content'])
+        self.EMAIL_ACCOUNT=os.path.getenv("EMAIL_ACCOUNT")
+        self.EMAIL_PASSWORD=os.path.getenv("EMAIL_PASSWORD") #从环境变量获取邮箱账号和密码
         option = webdriver.ChromeOptions()
         option.add_argument('headless')
         if driver_path:
@@ -100,11 +102,11 @@ class Chrome_driver():
     def send_mail(self):
         #使用第三方邮件服务
         mail_host="smtp.qq.com"  #设置服务器
-        mail_user="1696239338@qq.com"    #用户名
-        mail_pass="oimlkxiajuigcfjf"   #口令 
+        mail_user=self.EMAIL_ACCOUNT    #用户名
+        mail_pass=self.EMAIL_PASSWORD   #口令 
 
-        sender = '1696239338@qq.com'
-        receivers = ['1696239338@qq.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+        sender = self.EMAIL_ACCOUNT
+        receivers = [self.EMAIL_ACCOUNT]  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
         #创建一个带附件的实例
         message = MIMEMultipart()
@@ -153,7 +155,7 @@ def main_with_mail():
 
 if __name__ == '__main__':
     os.environ['TZ'] = 'Asia/Shanghai'
-    main()
+    main_with_mail()
     schedule.every(3).hours.do(main) # 每3小时执行一次
     schedule.every().day.at('23:58').do(main_with_mail)
     while True:
