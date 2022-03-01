@@ -139,4 +139,4 @@ driver.quit()
 driver.save_data()
 filepath='每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
 driver.concat_files('today',filepath=filepath)
-driver.sendmail()
+driver.send_mail()
