@@ -50,4 +50,4 @@ jobs:
             && chromedriver --version
 
       - name: 'Working'
-        run: python ./main.py
+        run: EMAIL_HOST=${{ secrets.EMAIL_HOST }} EMAIL_ACCOUNT=${{ secrets.EMAIL_ACCOUNT }} EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} python ./main.py
