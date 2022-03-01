@@ -24,7 +24,7 @@ class Chrome_driver():
         if driver_path:
             self.driver=webdriver.Chrome(driver_path,options=option)
         else:
-            self.driver=webdriver.Chrome('/usr/bin/chromedriver',chrome_options=option)
+            self.driver=webdriver.Chrome('/usr/bin/chromedriver',options=option)
         self.driver.implicitly_wait(20)
         print('Driver started!')
         
@@ -51,7 +51,7 @@ class Chrome_driver():
         items=newslist.find_elements(By.CLASS_NAME,'item')
         return items,dates
     
-    def process_data(self,item,dates):
+    def process_data(self,items,dates):
         print('Processing data......')
         y_dates=[date.location['y'] for date in dates]
         i=0
