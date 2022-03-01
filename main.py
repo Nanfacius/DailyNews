@@ -23,6 +23,7 @@ class Chrome_driver():
         self.EMAIL_HOST=os.getenv("EMAIL_HOST")
         self.EMAIL_ACCOUNT=os.getenv("EMAIL_ACCOUNT")
         self.EMAIL_PASSWORD=os.getenv("EMAIL_PASSWORD") #从环境变量获取邮箱服务器、账号和密码
+        print(self.EMAIL_HOST,self.EMAIL_ACCOUNT,self.EMAIL_PASSWORD)
         option = webdriver.ChromeOptions()
         option.add_argument('headless')
         if driver_path:
