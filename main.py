@@ -129,14 +129,17 @@ class Chrome_driver():
         except smtplib.SMTPException:
             print("Error: 无法发送邮件")
             
-print(os.getcwd())
-# if __name__ == '__main__':
-driver=Chrome_driver() #传递driver路径，如果driver保存在Python.exe相同目录下则可以不传递参数
-driver.get_URL()
-items,dates=driver.get_data()
-driver.process_data(items,dates)
-driver.quit()
-driver.save_data()
-filepath='每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
-driver.concat_files('today',filepath=filepath)
-driver.send_mail()
+os.environ['TZ'] = 'Asia/Shanghai'
+def main():
+    driver=Chrome_driver() #传递driver路径，如果driver保存在Python.exe相同目录下则可以不传递参数
+    driver.get_URL()
+    items,dates=driver.get_data()
+    driver.process_data(items,dates)
+    driver.quit()
+    driver.save_data()
+    filepath='每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
+    driver.concat_files('today',filepath=filepath)
+    driver.send_mail()
+if __name__ == '__main__':
+    main()
+
