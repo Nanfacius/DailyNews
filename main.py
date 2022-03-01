@@ -20,8 +20,9 @@ class Chrome_driver():
             os.mkdir(path)
         self.dict={}
         self.dataframe=pd.DataFrame(columns=['Date','Time','Tag','Title','Content'])
+        self.EMAIL_HOST=os.getenv("EMAIL_HOST")
         self.EMAIL_ACCOUNT=os.getenv("EMAIL_ACCOUNT")
-        self.EMAIL_PASSWORD=os.getenv("EMAIL_PASSWORD") #从环境变量获取邮箱账号和密码
+        self.EMAIL_PASSWORD=os.getenv("EMAIL_PASSWORD") #从环境变量获取邮箱服务器、账号和密码
         option = webdriver.ChromeOptions()
         option.add_argument('headless')
         if driver_path:
@@ -100,13 +101,6 @@ class Chrome_driver():
         print('Driver quited!')
         
     def send_mail(self):
-        #使用第三方邮件服务
-        mail_host="smtp.qq.com"  #设置服务器
-        mail_user=self.EMAIL_ACCOUNT    #用户名
-        mail_pass=self.EMAIL_PASSWORD   #口令 
-
-        sender = self.EMAIL_ACCOUNT
-        receivers = [self.EMAIL_ACCOUNT]  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
         #创建一个带附件的实例
         message = MIMEMultipart()
@@ -125,9 +119,9 @@ class Chrome_driver():
 
         try:
             smtpObj = smtplib.SMTP() 
-            smtpObj.connect(mail_host, 25)    # 25 为 SMTP 端口号
-            smtpObj.login(mail_user,mail_pass)  
-            smtpObj.sendmail(sender, receivers, message.as_string())
+            smtpObj.connect(self.EMAIL_HOST, 25)    # 25 为 SMTP 端口号
+            smtpObj.login(self.EMAIL_ACCOUNT,self.EMAIL_PASSWORD)  
+            smtpObj.sendmail(self.EMAIL_ACCOUNT, [self.EMAIL_ACCOUNT], message.as_string())
             print("邮件发送成功")
         except smtplib.SMTPException:
             print("Error: 无法发送邮件")
