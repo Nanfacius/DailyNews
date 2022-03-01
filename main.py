@@ -36,7 +36,7 @@ class Chrome_driver():
     def get_URL(self):
         print('Connecting......')
         self.driver.get(self.URL)
-        sleep(10)
+        sleep(15)
         checkboxes=self.driver.find_elements(By.CLASS_NAME,'ivu-checkbox-input')
         checkboxes[1].click()
         while True:
