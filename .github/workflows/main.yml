@@ -1,4 +1,4 @@
-name: Github 163 mv 2h
+name: DailyNews
 
 # Controls when the action will run. 
 on:
@@ -49,5 +49,5 @@ jobs:
             && sudo chmod +x /usr/local/bin/chromedriver \
             && chromedriver --version
 
-      - name: 'Working 163 MV Crawler'
+      - name: 'Working'
         run: python ./main.py
