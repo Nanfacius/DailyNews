@@ -1,1 +1,1 @@
-# EverydayMedicalNews
+# DailyNews
