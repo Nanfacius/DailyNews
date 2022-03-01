@@ -7,17 +7,25 @@ import pandas as pd
 from time import sleep
 
 class Chrome_driver():
-    def __init__(self,URL='https://vbdata.cn/newsList',path=os.path.join(os.getcwd(),'DATA')):
+    def __init__(self,URL='https://vbdata.cn/newsList',path=os.path.join(os.getcwd(),'DATA'),driver_path=None):
+        print('Starting driver......')
         self.URL=URL
         self.path=path
         if not os.path.exists(path):
             os.mkdir(path)
         self.dict={}
         self.dataframe=pd.DataFrame(columns=['Date','Time','Tag','Title','Content'])
-        self.driver=webdriver.Chrome()
+        option = webdriver.ChromeOptions()
+        option.add_argument('headless')
+        if driver_path:
+            self.driver=webdriver.Chrome('/usr/bin/chromedriver',chrome_options=option)
+        else:
+            self.driver=webdriver.Chrome(chrome_options=option)
         self.driver.implicitly_wait(20)
+        print('Driver started!')
         
     def get_URL(self):
+        print('Connecting......')
         self.driver.get(self.URL)
         checkboxes=self.driver.find_elements(By.CLASS_NAME,'ivu-checkbox-input')
         checkboxes[1].click()
@@ -30,14 +38,17 @@ class Chrome_driver():
         button=more.find_element(By.TAG_NAME,'button')
         button.click()
         sleep(3)
+        print('Connected!')
         
     def get_data(self):
+        print('Getting data.......')
         dates=self.driver.find_elements(By.CSS_SELECTOR,'div.info>p')
         newslist=self.driver.find_element(By.CLASS_NAME,'news_list')
         items=newslist.find_elements(By.CLASS_NAME,'item')
         return items,dates
     
     def process_data(self,item,dates):
+        print('Processing data......')
         y_dates=[date.location['y'] for date in dates]
         i=0
         for item in items:
@@ -53,15 +64,18 @@ class Chrome_driver():
             self.dataframe.columns=['Date','Time','Tag','Title','Content']
 
     def save_data(self):
+        print('Saving data......')
         self.dataframe.to_excel(os.path.join(self.path,'每日新闻'+time.strftime("%Y%m%d_%H%M", time.localtime())+'.xlsx'),index=False)
-    
+        print('Data saved!')
+        
     def concat_files(self,date1=None,date2=time.strftime("%Y%m%d", time.localtime()),filepath=None):#合并文件，日期从date1到date2，格式为‘YYYYmmDD’,date1若赋值'today'则合并当天新闻
+        print('Concatenating files......')
         if not date1:
             date1='20000101'
         if date1=='today':
             date1=time.strftime("%Y%m%d", time.localtime())
         if not filepath:
-            filepath=os.path.join(self.path,'每日新闻合并.xlsx')
+            filepath=os.path.join(self.path,'每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx')
         dfs=[self.dataframe,]
         for file in os.listdir(self.path):
             if file[-5:]=='.xlsx':
@@ -71,14 +85,17 @@ class Chrome_driver():
                         dfs.append(pd.read_excel(os.path.join(self.path,file)))
         df=pd.concat(dfs,ignore_index=True).drop_duplicates().sort_values(by=['Date','Time'],ascending=False)
         df.to_excel(filepath,index=False)
+        print('Files contenated!')
     def quit(self):
         self.driver.quit()
+        print('Driver quited!')
     
-if __name__ == '__main__':
-    driver=Chrome_driver()
-    driver.get_URL()
-    items,dates=driver.get_data()
-    driver.process_data(items,dates)
-    driver.quit()
-    driver.save_data()
-    driver.concat_files('today')
+# if __name__ == '__main__':
+driver=Chrome_driver() #传递driver路径，如果driver保存在Python.exe相同目录下则可以不传递参数
+driver.get_URL()
+items,dates=driver.get_data()
+driver.process_data(items,dates)
+driver.quit()
+driver.save_data()
+driver.concat_files('today')
+    
