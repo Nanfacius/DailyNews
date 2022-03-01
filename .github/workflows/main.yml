@@ -23,6 +23,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: 'Set up Timezone'
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Asia/Shanghai"
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -48,10 +53,6 @@ jobs:
             && sudo mv chromedriver /usr/local/bin/chromedriver \
             && sudo chmod +x /usr/local/bin/chromedriver \
             && chromedriver --version
-      - name: 'Set up Timezone'
-        uses: szenius/set-timezone@v1.0
-        with:
-          timezoneLinux: "Asia/Shanghai"
 
       - name: 'Working'
         run: EMAIL_HOST=${{ secrets.EMAIL_HOST }} EMAIL_ACCOUNT=${{ secrets.EMAIL_ACCOUNT }} EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} python ./main.py
