@@ -20,8 +20,8 @@ class Chrome_driver():
             os.mkdir(path)
         self.dict={}
         self.dataframe=pd.DataFrame(columns=['Date','Time','Tag','Title','Content'])
-        self.EMAIL_ACCOUNT=os.path.getenv("EMAIL_ACCOUNT")
-        self.EMAIL_PASSWORD=os.path.getenv("EMAIL_PASSWORD") #从环境变量获取邮箱账号和密码
+        self.EMAIL_ACCOUNT=os.getenv("EMAIL_ACCOUNT")
+        self.EMAIL_PASSWORD=os.getenv("EMAIL_PASSWORD") #从环境变量获取邮箱账号和密码
         option = webdriver.ChromeOptions()
         option.add_argument('headless')
         if driver_path:
