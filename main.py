@@ -9,6 +9,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
+import schedule
 
 class Chrome_driver():
     def __init__(self,URL='https://vbdata.cn/newsList',path=os.path.join(os.getcwd(),'DATA'),driver_path=None):
@@ -129,9 +130,18 @@ class Chrome_driver():
         except smtplib.SMTPException:
             print("Error: 无法发送邮件")
             
-os.environ['TZ'] = 'Asia/Shanghai'
 def main():
-    driver=Chrome_driver() #传递driver路径，如果driver保存在Python.exe相同目录下则可以不传递参数
+    driver=Chrome_driver(driver_path='/usr/local/bin/chromedriver') #传递driver路径，如果driver保存在Python.exe相同目录下则可以不传递参数
+    driver.get_URL()
+    items,dates=driver.get_data()
+    driver.process_data(items,dates)
+    driver.quit()
+    driver.save_data()
+    filepath='每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
+    driver.concat_files('today',filepath=filepath)
+
+def main_with_mail():
+    driver=Chrome_driver(driver_path='/usr/local/bin/chromedriver') #传递driver路径，如果driver保存在Python.exe相同目录下则可以不传递参数
     driver.get_URL()
     items,dates=driver.get_data()
     driver.process_data(items,dates)
@@ -140,6 +150,11 @@ def main():
     filepath='每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
     driver.concat_files('today',filepath=filepath)
     driver.send_mail()
-if __name__ == '__main__':
-    main()
 
+if __name__ == '__main__':
+    os.environ['TZ'] = 'Asia/Shanghai'
+    main()
+    schedule.every(3).hours.do(main) # 每3小时执行一次
+    schedule.every().day.at('23:58').do(main_with_mail)
+    while True:
+        schedule.run_pending() # 运行所有可运行的任务
