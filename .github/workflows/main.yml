@@ -50,4 +50,7 @@ jobs:
             && chromedriver --version
 
       - name: 'Working'
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: "Asia/Shanghai"
         run: EMAIL_HOST=${{ secrets.EMAIL_HOST }} EMAIL_ACCOUNT=${{ secrets.EMAIL_ACCOUNT }} EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} python ./main.py
