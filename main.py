@@ -152,7 +152,7 @@ def main_with_mail():
 if __name__ == '__main__':
     os.environ['TZ'] = 'Asia/Shanghai'
     main_with_mail()
-    schedule.every().day.at('9:00').do(main)
+    schedule.every().day.at('09:00').do(main)
     schedule.every().day.at('12:00').do(main)
     schedule.every().day.at('15:00').do(main)
     schedule.every().day.at('18:00').do(main)
