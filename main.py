@@ -134,9 +134,9 @@ print(os.getcwd())
 driver=Chrome_driver() #传递driver路径，如果driver保存在Python.exe相同目录下则可以不传递参数
 driver.get_URL()
 items,dates=driver.get_data()
-filepath='每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
-driver.process_data(items,dates,filepath)
+driver.process_data(items,dates)
 driver.quit()
 driver.save_data()
-driver.concat_files('today')
-
+filepath='每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
+driver.concat_files('today',filepath=filepath)
+driver.sendmail()
