@@ -22,9 +22,9 @@ class Chrome_driver():
         option = webdriver.ChromeOptions()
         option.add_argument('headless')
         if driver_path:
-            self.driver=webdriver.Chrome('/usr/bin/chromedriver',options=option)
+            self.driver=webdriver.Chrome(driver_path,options=option)
         else:
-            self.driver=webdriver.Chrome(chrome_options=option)
+            self.driver=webdriver.Chrome('/usr/bin/chromedriver',chrome_options=option)
         self.driver.implicitly_wait(20)
         print('Driver started!')
         
