@@ -11,7 +11,7 @@ from email.mime.multipart import MIMEMultipart
 from email.header import Header
 
 class Chrome_driver():
-    def __init__(self,URL='https://vbdata.cn/newsList',path=os.path.join(os.getcwd(),'DATA'),driver_path=None):
+    def __init__(self,URL='https://vbdata.cn/newsList',path=os.path.join(os.os_path,'DATA'),driver_path=None):
         print('Starting driver......')
         self.URL=URL
         self.path=path
@@ -129,7 +129,7 @@ class Chrome_driver():
         except smtplib.SMTPException:
             print("Error: 无法发送邮件")
             
-print(os.getcwd())
+print(os.os_path)
 # if __name__ == '__main__':
 driver=Chrome_driver() #传递driver路径，如果driver保存在Python.exe相同目录下则可以不传递参数
 driver.get_URL()
