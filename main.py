@@ -152,6 +152,6 @@ if __name__ == '__main__':
     os.environ['TZ'] = 'Asia/Shanghai'
     main_with_mail()
     schedule.every(3).hours.do(main) # 每3小时执行一次
-    schedule.every().day.at('23:58').do(main_with_mail)
+    schedule.every().day.at('23:30').do(main_with_mail)
     while True:
         schedule.run_pending() # 运行所有可运行的任务
