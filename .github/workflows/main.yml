@@ -48,7 +48,7 @@ jobs:
             && sudo mv chromedriver /usr/local/bin/chromedriver \
             && sudo chmod +x /usr/local/bin/chromedriver \
             && chromedriver --version
-      - name: 'Timezone Setting'
+      - name: 'Set up Timezone'
         uses: szenius/set-timezone@v1.0
         with:
           timezoneLinux: "Asia/Shanghai"
