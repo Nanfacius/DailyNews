@@ -52,8 +52,14 @@ class Chrome_driver():
         
     def get_data(self):
         print('Getting data.......')
-        dates=self.driver.find_elements(By.CSS_SELECTOR,'div.info>p')
+        dates=[]
+        date1=self.driver.find_element(By.CSS_SELECTOR,'div.info>p')
         newslist=self.driver.find_element(By.CLASS_NAME,'news_list')
+        try:
+            date2=newslist.find_element(By.CSS_SELECTOR,'div.d-time>span')
+            dates=[date1,date2]
+        except:
+            dates=[date1]
         items=newslist.find_elements(By.CLASS_NAME,'item')
         return items,dates
     
@@ -63,16 +69,18 @@ class Chrome_driver():
         i=0
         for item in items:
             if len(y_dates)==2 and item.location['y']>y_dates[1]:
-                i=1
+                date=re.findall('[0-9]{4}年',dates[0].text)[0]+dates[1].text
+            else:
+                date=re.findall('[0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日',dates[0].text)[0]
             time=item.find_element(By.CLASS_NAME,'time').text
             a1=item.find_element(By.CLASS_NAME,'a1')
             tag=a1.find_element(By.CLASS_NAME,'tag').text
             title=a1.text
             a2=item.find_element(By.CLASS_NAME,'a2')
             content=a2.text
-            self.dataframe=self.dataframe.append({'Date':re.findall('[0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日',dates[i].text)[0],'Time':time,'Tag':tag,'Title':title,'Content':content},ignore_index=True)
+            self.dataframe=self.dataframe.append({'Date':date,'Time':time,'Tag':tag,'Title':title,'Content':content},ignore_index=True)
             self.dataframe.columns=['Date','Time','Tag','Title','Content']
-
+            
     def save_data(self):
         print('Saving data......')
         self.dataframe.to_excel(os.path.join(self.path,'每日新闻'+time.strftime("%Y%m%d_%H%M", time.localtime())+'.xlsx'),index=False)
@@ -135,7 +143,7 @@ def main():
     driver.process_data(items,dates)
     driver.quit()
     driver.save_data()
-    filepath='每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
+    filepath='DATA\每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
     driver.concat_files('today',filepath=filepath)
 
 def main_with_mail():
@@ -145,7 +153,7 @@ def main_with_mail():
     driver.process_data(items,dates)
     driver.quit()
     driver.save_data()
-    filepath='每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
+    filepath='DATA\每日新闻合并'+time.strftime("%Y%m%d", time.localtime())+'.xlsx'
     driver.concat_files('today',filepath=filepath)
     driver.send_mail()
 
