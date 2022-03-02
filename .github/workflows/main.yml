@@ -52,3 +52,15 @@ jobs:
 
       - name: 'Working'
         run: EMAIL_HOST=${{ secrets.EMAIL_HOST }} EMAIL_ACCOUNT=${{ secrets.EMAIL_ACCOUNT }} EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} python ./main.py
+
+      - name: commit
+        run: |
+          git config --global user.email 1696239338@qq.com
+          git config --global user.name Nanfacius
+          git add .
+          git commit -m "update" -a
+		
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
