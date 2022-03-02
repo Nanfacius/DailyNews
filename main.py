@@ -124,7 +124,7 @@ class Chrome_driver():
         att1 = MIMEText(open(self.filepath, 'rb').read(), 'base64', 'utf-8')
         att1["Content-Type"] = 'application/octet-stream'
         # 这里的filename可以任意写，写什么名字，邮件中显示什么名字（不要使用中文）
-        att1["Content-Disposition"] = 'attachment; filename="DailyNews20220301.xlsx"'
+        att1["Content-Disposition"] = attachment; filename="DailyNews'+time.strftime("%Y%m%d", time.localtime())+'.xlsx"'
         message.attach(att1)
 
         try:
