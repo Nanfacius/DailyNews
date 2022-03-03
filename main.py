@@ -110,7 +110,7 @@ class Chrome_driver():
             tag=a1.find_element(By.CLASS_NAME,'tag').text
             title=a1.text
             a2=item.find_element(By.CLASS_NAME,'a2')
-            content=a2.text
+            content=a2.text.lstrip(tag)
             
             #保存为pandas DataFrame
             self.dataframe=self.dataframe.append({'Date':date,'Time':time,'Tag':tag,'Title':title,'Content':content},ignore_index=True)
