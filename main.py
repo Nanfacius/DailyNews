@@ -54,7 +54,7 @@ class Chrome_driver():
         
         #等待网页内容出现后点击“只看推荐的”选框
         checkboxes=self.driver.find_elements(By.CLASS_NAME,'ivu-checkbox-input')
-        sleep(15)
+        sleep(25)
         checkboxes=self.driver.find_elements(By.CLASS_NAME,'ivu-checkbox-input')
         checkboxes[1].click()
         
