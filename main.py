@@ -165,7 +165,7 @@ class Chrome_driver():
         df=pd.read_excel(self.filepath)
         text='[太阳]早上好~医疗行业“健康早餐”\n来啦！\n'+time.strftime("%Y/%m/%d", time.localtime())+'\n┈┈┈┈┈┈┈┈┈┈┈┈┈┈\n'
         for i in range(len(df)):
-            text+=str(i+1)+df.loc[i,'Title']+'\n'
+            text+=str(i+1)+'.'+df.loc[i,'Title']+'\n'
         text+='┈┈┈┈┈┈┈┈┈┈┈┈┈┈\nECV Digital Healthcare致力于推动数字医疗行业持续发展。ECV医疗社群欢迎分享干货与实践交流，更有行业报告及一手资源。入群或更多行业需求，请微信联系：joeys_1116'
         with open(self.report_path,'w') as f:
             f.write(text)
