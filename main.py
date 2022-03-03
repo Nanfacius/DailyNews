@@ -183,7 +183,7 @@ class Chrome_driver():
         mail_user=os.getenv("EMAIL_ACCOUNT")
         mail_pass=os.getenv("EMAIL_PASSWORD") 
         sender=mail_user
-        receiver=[mail_user]
+        receivers=[mail_user]
         
         #创建一个带附件的实例
         message = MIMEMultipart()
