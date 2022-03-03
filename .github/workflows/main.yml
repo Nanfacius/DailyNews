@@ -9,9 +9,9 @@ on:
     branches: [ main ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  # schedule:
-  # 定时任务，每隔 3 小时执行
-  #  - cron: '0 0/3 * * ?'
+  schedule:
+  #定时任务 注意转换时区
+   - cron: '30 23 * * ?'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -52,15 +52,3 @@ jobs:
 
       - name: 'Working'
         run: EMAIL_HOST=${{ secrets.EMAIL_HOST }} EMAIL_ACCOUNT=${{ secrets.EMAIL_ACCOUNT }} EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} python ./main.py
-
-      - name: commit
-        run: |
-          git config --global user.email 1696239338@qq.com
-          git config --global user.name Nanfacius
-          git add .
-          git commit -m "update" -a
-		
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
