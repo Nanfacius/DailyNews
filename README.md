@@ -3,3 +3,4 @@ Daily News Spider
 EMAIL_HOST=邮箱发件服务器地址  
 EMAIL_ACCOUNT=邮箱账号  
 EMAIL_PASSWORD=邮箱密码
+
