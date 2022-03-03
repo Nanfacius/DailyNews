@@ -181,7 +181,7 @@ class Chrome_driver():
         #从环境变量获取邮箱服务器、账号和密码
         mail_host=os.getenv("EMAIL_HOST")
         mail_user=os.getenv("EMAIL_ACCOUNT")
-        mail_path=os.getenv("EMAIL_PASSWORD") 
+        mail_pass=os.getenv("EMAIL_PASSWORD") 
         sender=mail_user
         receiver=[mail_user]
         
