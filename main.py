@@ -182,7 +182,7 @@ class Chrome_driver():
         mail_host=os.getenv("EMAIL_HOST")
         mail_user=os.getenv("EMAIL_ACCOUNT")
         mail_pass=os.getenv("EMAIL_PASSWORD") 
-        mail_receivers=json.loads(os.getenv("EMAIL_RECEIVER"))
+        mail_receivers=[mail_user,os.getenv("EMAIL_RECEIVER")]
         mail_sender=mail_user
         
         #创建一个带附件的实例
