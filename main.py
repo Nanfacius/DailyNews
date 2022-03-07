@@ -1,7 +1,7 @@
 # -*-  coding: utf-8 -*-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import os,time,re
+import os,time,re,json
 import pandas as pd
 from time import sleep
 import schedule
@@ -182,8 +182,8 @@ class Chrome_driver():
         mail_host=os.getenv("EMAIL_HOST")
         mail_user=os.getenv("EMAIL_ACCOUNT")
         mail_pass=os.getenv("EMAIL_PASSWORD") 
-        sender=mail_user
-        receivers=[mail_user]
+        mail_receivers=json.loads(os.getenv("EMAIL_RECEIVER"))
+        mail_sender=mail_user
         
         #创建一个带附件的实例
         message = MIMEMultipart()
@@ -211,7 +211,7 @@ class Chrome_driver():
             smtpObj = smtplib.SMTP() 
             smtpObj.connect(mail_host, 25)    # 25 为 SMTP 端口号
             smtpObj.login(mail_user,mail_pass)  
-            smtpObj.sendmail(sender, receivers, message.as_string())
+            smtpObj.sendmail(mail_sender, mail_receivers, message.as_string())
             print("Mail Sended")
         except smtplib.SMTPException:
             print("Failed")
